@@ -54,7 +54,7 @@ int		get_tet(int fd, t_tet **new)
 	if ((buf = ft_strnew(21)) == NULL)
 		return (-1);
 	n = -1;
-	if ((size = read(fd, buf, sizeof(buf)) >= 20))
+	if ((size = read(fd, buf, 21)) >= 20)
 	{
 		if (check_buf(buf, size) == TRUE)
 		{

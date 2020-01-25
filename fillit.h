@@ -22,4 +22,6 @@ void	lstadd(t_tet **head, t_tet *tet);
 int		get_max(int a, int b);
 t_bool	check_buf(const char *buf, int size);
 int		get_min_field_size(t_tet *head);
+char	**get_matrix(int field_size, t_tet *tets);
+int		solve(int field_size, t_tet **tets);
 #endif

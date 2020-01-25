@@ -4,6 +4,7 @@ int		main(int argc, char **argv)
 {
 	t_tet	*tets;
 	int		field_size;
+	//int		res;
 
 	if (argc != 2)
 		ft_putendl("usage: fillit <path_to_input_file>");
@@ -15,12 +16,12 @@ int		main(int argc, char **argv)
 		{
 			ft_putendl("good");
 			field_size = get_min_field_size(tets);
-			while ((res = solve(field_size++, &tets)) != 1)
-				if (res == -1)
-				{
-					ft_putendl("Error");
-					break ;
-				}
+			//while ((res = solve(field_size++, &tets)) != 1)
+			//	if (res == -1)
+			//	{
+			//		ft_putendl("Error");
+			//		break ;
+			//	}
 			free_tets(&tets);
 		}
 	}

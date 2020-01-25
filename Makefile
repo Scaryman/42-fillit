@@ -3,7 +3,7 @@ TARGET = fillit
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -c
 
-SRC = main.c tetromino.c utils.c matrix.c
+SRC = main.c tetromino.c utils.c matrix.c solver.c
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
 LIBFT_DIR = libft

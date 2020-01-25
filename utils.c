@@ -18,7 +18,7 @@ t_bool	check_buf(const char *buf, int size)
 	n = -1;
 	while (++n < 20)
 	{
-		if (n % 4 == 0 && buf[n] != '\n')
+		if (n > 0 && (n + 1) % 5 == 0 && buf[n] != '\n')
 			return (FALSE);
 		else if (buf[n] == '#')
 		{
@@ -28,7 +28,7 @@ t_bool	check_buf(const char *buf, int size)
 			count += n - 5 >= 0 && buf[n - 5] == '#';
 			count += n + 5 <= 19 && buf[n + 5] == '#';
 		}
-		else if (n % 4 != 0 && buf[n] != '.')
+		else if ((n == 0 || (n + 1) % 5 != 0) && buf[n] != '.')
 			return (FALSE);
 	}
 	if (size == 21 && buf[20] != '\n')

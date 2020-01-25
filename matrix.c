@@ -20,6 +20,7 @@ int		get_min_field_size(t_tet *head)
 	}
 	while (res * res < n * 4)
 		res++;
+	return (res);
 }
 
 char	*join_variant(char *lm, char *variant)
@@ -53,7 +54,7 @@ t_bool	fill_variants(char **lm, char **field, t_tet *tet, int fs)
 				break;
 		}
 		if (n == 4)
-			if ((*lm == join_variant(*lm, field)) == NULL)
+			if ((*lm = join_variant(*lm, *field)) == NULL)
 				return (FALSE);
 	}
 	return (TRUE);
@@ -65,7 +66,7 @@ char	**line_to_matrix(char **line, int fs)
 	int		height;
 	int		n;
 
-	height = ft_strlen(*line) / (fs * fs) + 1;
+	height = (int)ft_strlen(*line) / (fs * fs) + 1;
 	if ((matrix = ft_memalloc(sizeof(char *) * (height + 2))) == NULL)
 	{
 		ft_strdel(line);
@@ -81,7 +82,7 @@ char	**line_to_matrix(char **line, int fs)
 		}
 		matrix[n] = ft_memset(matrix[n], '0', fs * fs);
 		if (n > 0)
-			ft_memcpy(matrix[n][1], line(n * fs * fs), fs * fs);
+			ft_memcpy(&matrix[n][1], line[n * fs * fs], fs * fs);
 	}
 	ft_strdel(line);
 	return (matrix);
@@ -108,7 +109,7 @@ char	**get_matrix(int field_size, t_tet *tets)
 	if (line)
 	{
 		ft_strdel(&line);
-		return (line_to_matrix(&line));
+		return (line_to_matrix(&line, field_size));
 	}
 	else
 		return (NULL);
