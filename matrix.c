@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sosartor <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/25 13:47:49 by sosartor          #+#    #+#             */
+/*   Updated: 2020/01/25 13:47:51 by sosartor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 int		get_min_field_size(t_tet *head)
@@ -51,7 +63,7 @@ t_bool	fill_variants(char **lm, char **field, t_tet *tet, int fs)
 			if (pos % fs != 0 && pos < fs * fs)
 				*field[pos] = '1';
 			else
-				break;
+				break ;
 		}
 		if (n == 4)
 			if ((*lm = join_variant(*lm, *field)) == NULL)
@@ -62,7 +74,7 @@ t_bool	fill_variants(char **lm, char **field, t_tet *tet, int fs)
 
 char	**line_to_matrix(char **line, int fs)
 {
-	char 	**matrix;
+	char	**matrix;
 	int		height;
 	int		n;
 
@@ -102,7 +114,7 @@ char	**get_matrix(int field_size, t_tet *tets)
 	while (cur_tet)
 	{
 		if (fill_variants(&line, &tmp, cur_tet, field_size) == FALSE)
-			break;
+			break ;
 		cur_tet = cur_tet->next;
 	}
 	ft_strdel(&tmp);
