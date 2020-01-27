@@ -19,6 +19,13 @@ int		get_max(int a, int b)
 	return (b);
 }
 
+int		get_min(int a, int b)
+{
+	if (a <= b)
+		return (a);
+	return (b);
+}
+
 t_bool	check_buf(const char *buf, int size)
 {
 	int	n;
@@ -46,4 +53,19 @@ t_bool	check_buf(const char *buf, int size)
 	if (size == 21 && buf[20] != '\n')
 		return (FALSE);
 	return (blocks == 4 && count > 5);
+}
+
+void	lstadd(t_tet **head, t_tet *tet)
+{
+	t_tet	*tmp;
+
+	tmp = *head;
+	if (!tmp)
+		*head = tet;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = tet;
+	}
 }

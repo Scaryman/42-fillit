@@ -42,7 +42,7 @@ char	*join_variant(char *lm, char *variant)
 	tmp = lm;
 	if ((lm = ft_strjoin(lm, variant)) == NULL)
 		return (NULL);
-	ft_strdel(&tmp);
+	ft_memdel((void**)&tmp);
 	return (lm);
 }
 
@@ -53,15 +53,16 @@ t_bool	fill_variants(char **lm, char **field, t_tet *tet, int fs)
 	int	pos;
 
 	shift = -1;
-	while (++shift < fs * fs - 4)
+	while (++shift <= fs * fs - 4)
 	{
-		*field = ft_memset(field, '0', fs * fs);
+		*field = ft_memset(*field, '0', fs * fs);
 		n = -1;
 		while (++n < 4)
 		{
 			pos = tet->y[n] * fs + tet->x[n] + shift;
-			if (pos % fs != 0 && pos < fs * fs)
-				*field[pos] = '1';
+			if (pos < fs * fs && (pos == 0 || (pos % 4 == 0
+				&& (*field)[pos - 1] == '0') || pos % 4 != 0))
+				(*field)[pos] = tet->c;
 			else
 				break ;
 		}
@@ -79,9 +80,9 @@ char	**line_to_matrix(char **line, int fs)
 	int		n;
 
 	height = (int)ft_strlen(*line) / (fs * fs) + 1;
-	if ((matrix = ft_memalloc(sizeof(char *) * (height + 2))) == NULL)
+	if ((matrix = (char **)malloc(sizeof(char *) * (height + 1))) == NULL)
 	{
-		ft_strdel(line);
+		free_arrs(*line, NULL);
 		return (NULL);
 	}
 	n = -1;
@@ -89,14 +90,15 @@ char	**line_to_matrix(char **line, int fs)
 	{
 		if ((matrix[n] = ft_strnew((fs * fs) + 1)) == NULL)
 		{
-			ft_strdel(line);
+			free_arrs(*line, matrix);
 			return (NULL);
 		}
-		matrix[n] = ft_memset(matrix[n], '0', fs * fs);
+		matrix[n] = ft_memset(matrix[n], '0', fs * fs + 1);
 		if (n > 0)
-			ft_memcpy(&matrix[n][1], line[n * fs * fs], fs * fs);
+			ft_memcpy(&matrix[n][1], &(*line)[(n - 1) * fs * fs], fs * fs);
 	}
-	ft_strdel(line);
+	matrix[n] = NULL;
+	ft_memdel((void **)line);
 	return (matrix);
 }
 
@@ -110,7 +112,10 @@ char	**get_matrix(int field_size, t_tet *tets)
 	if ((tmp = ft_strnew(field_size * field_size)) == NULL)
 		return (NULL);
 	if ((line = ft_strnew(0)) == NULL)
+	{
+		ft_strdel(&tmp);
 		return (NULL);
+	}
 	while (cur_tet)
 	{
 		if (fill_variants(&line, &tmp, cur_tet, field_size) == FALSE)
@@ -120,7 +125,6 @@ char	**get_matrix(int field_size, t_tet *tets)
 	ft_strdel(&tmp);
 	if (line)
 	{
-		ft_strdel(&line);
 		return (line_to_matrix(&line, field_size));
 	}
 	else

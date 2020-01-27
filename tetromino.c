@@ -18,22 +18,22 @@ t_tet	*create_tets(char *filename)
 	t_tet	*tets;
 	t_tet	*new;
 	int		res;
+	char	c;
 
 	tets = NULL;
 	new = NULL;
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		return (NULL);
-	while ((res = get_tet(fd, &new)) > 0)
-	{
+	c = 'A';
+	while ((res = get_tet(fd, &new, c++)) > 0)
 		lstadd(&tets, new);
-	}
 	close(fd);
 	if (res == -1)
 		free_tets(&tets);
 	return (tets);
 }
 
-t_tet	*create_tet(const char *buf, int size)
+t_tet	*create_tet(const char *buf, int size, char c)
 {
 	t_tet	*tet;
 	int		n;
@@ -49,15 +49,17 @@ t_tet	*create_tet(const char *buf, int size)
 			{
 				tet->x[i] = n % 5;
 				tet->y[i] = n / 5;
+				tet->c = c;
 				i++;
 			}
 		}
 		tet->next = NULL;
 	}
+	shift_tet(&tet);
 	return (tet);
 }
 
-int		get_tet(int fd, t_tet **new)
+int		get_tet(int fd, t_tet **new, char c)
 {
 	char	*buf;
 	int		n;
@@ -70,7 +72,7 @@ int		get_tet(int fd, t_tet **new)
 	{
 		if (check_buf(buf, size) == TRUE)
 		{
-			if ((*new = create_tet(buf, size)) == NULL)
+			if ((*new = create_tet(buf, size, c)) == NULL)
 				size = -1;
 		}
 		else
@@ -97,17 +99,25 @@ void	free_tets(t_tet **head)
 	*head = NULL;
 }
 
-void	lstadd(t_tet **head, t_tet *tet)
+void	shift_tet(t_tet **tet)
 {
 	t_tet	*tmp;
+	int		i;
+	int		min_x;
+	int		min_y;
 
-	tmp = *head;
-	if (!tmp)
-		*head = tet;
-	else
+	tmp = *tet;
+	i = -1;
+	min_x = 4;
+	min_y = 4;
+	while (++i < 4)
 	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = tet;
+		min_x = get_min(min_x, tmp->x[i]);
+		min_y = get_min(min_y, tmp->y[i]);
+	}
+	while (--i >= 0)
+	{
+		tmp->x[i] = tmp->x[i] - min_x;
+		tmp->y[i] = tmp->y[i] - min_y;
 	}
 }
