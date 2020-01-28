@@ -55,19 +55,27 @@ t_bool	check_buf(const char *buf, int size)
 	return (blocks == 4 && count > 5);
 }
 
-void	lstadd(t_tet **head, t_tet *tet)
+t_bool	lstadd(t_tet **head, t_tet *tet)
 {
 	t_tet	*tmp;
+	int		n;
 
 	tmp = *head;
 	if (!tmp)
 		*head = tet;
 	else
 	{
+		n = 1;
 		while (tmp->next)
+		{
 			tmp = tmp->next;
+			n++;
+		}
+		if (n == 26)
+			return (FALSE);
 		tmp->next = tet;
 	}
+	return (TRUE);
 }
 
 int		ft_sqrt(int num)

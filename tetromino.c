@@ -27,7 +27,11 @@ t_tet	*create_tets(char *filename)
 	c = 'A';
 	res = 0;
 	while ((res = get_tet(fd, &new, res, c++)) > 0)
-		lstadd(&tets, new);
+		if (lstadd(&tets, new) == FALSE)
+		{
+			res = -1;
+			break ;
+		}
 	close(fd);
 	if (res == -1 || res == 21)
 		free_tets(&tets);
