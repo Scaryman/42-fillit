@@ -35,7 +35,7 @@ $(NAME): $(OBJ)
 	ranlib $(NAME)
 
 %.o: %.c
-	gcc  $< -c -o $@
+	gcc -Wall -Wextra -Werror $(INCLUDE) $< -c -o $@
 
 clean:
 	/bin/rm -f $(OBJ)
