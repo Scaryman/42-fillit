@@ -12,27 +12,24 @@
 
 #include "fillit.h"
 
-int		get_min_field_size(t_tet *head)
+char	**complete_matrix(char **matrix)
 {
-	int		n;
-	int		i;
-	t_tet	*tmp;
-	int		res;
-
+	int	n;
+	int	i;
+	
+	n = 1;
+	while (matrix[0][++n] != '\0')
+		matrix[0][n] = '1';
 	n = 0;
-	res = 1;
-	tmp = head;
-	while (tmp)
+	while (matrix[++n])
 	{
-		i = -1;
-		while (++i < 4)
-			res = get_max(res, get_max(tmp->x[i], tmp->y[i]) + 1);
-		tmp = tmp->next;
-		n++;
+		matrix[n][0] = '1';
+		i = 2;
+		while (matrix[n][i] == '0')
+			i++;
+		matrix[n][1] = matrix[n][i];
 	}
-	while (res * res < n * 4)
-		res++;
-	return (res);
+	return (matrix);
 }
 
 char	*join_variant(char *lm, char *variant)
@@ -88,18 +85,18 @@ char	**line_to_matrix(char **line, int fs)
 	n = -1;
 	while (++n < height)
 	{
-		if ((matrix[n] = ft_strnew((fs * fs) + 1)) == NULL)
+		if ((matrix[n] = ft_strnew((fs * fs) + 2)) == NULL)
 		{
 			free_arrs(*line, matrix);
 			return (NULL);
 		}
-		matrix[n] = ft_memset(matrix[n], '0', fs * fs + 1);
+		matrix[n] = ft_memset(matrix[n], '0', fs * fs + 2);
 		if (n > 0)
-			ft_memcpy(&matrix[n][1], &(*line)[(n - 1) * fs * fs], fs * fs);
+			ft_memcpy(&matrix[n][2], &(*line)[(n - 1) * fs * fs], fs * fs);
 	}
 	matrix[n] = NULL;
 	ft_memdel((void **)line);
-	return (matrix);
+	return (complete_matrix(matrix));
 }
 
 char	**get_matrix(int field_size, t_tet *tets)

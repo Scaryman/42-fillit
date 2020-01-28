@@ -36,8 +36,15 @@ int					get_max(int a, int b);
 t_bool				check_buf(const char *buf, int size);
 int					get_min_field_size(t_tet *head);
 char				**get_matrix(int field_size, t_tet *tets);
-int					solve(int field_size, t_tet **tets);
 int					get_min(int a, int b);
 void				shift_tet(t_tet **tet);
 void				free_arrs(char *arr, char **arr2d);
+char	**complete_matrix(char **matrix);
+int		ft_sqrt(int num);
+int		get_solution(int field_size, t_tet *tets);
+char	*get_field_from_matrix(char **matrix, int size);
+int	print_solution(char **matrix);
+char	**set_covering(char **matrix, int row);
+int	solve(char **matrix, t_tet *cur_tet, int n);
+char	**unset_covering(char **matrix, int row);
 #endif

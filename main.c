@@ -26,9 +26,8 @@ int		main(int argc, char **argv)
 			ft_putendl("Error");
 		else
 		{
-			ft_putendl("good");
 			field_size = get_min_field_size(tets);
-			while ((res = solve(field_size++, &tets)) != 1)
+			while ((res = get_solution(field_size++, tets)) != 1)
 				if (res == -1)
 				{
 					ft_putendl("Error");

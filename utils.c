@@ -69,3 +69,16 @@ void	lstadd(t_tet **head, t_tet *tet)
 		tmp->next = tet;
 	}
 }
+
+int		ft_sqrt(int num)
+{
+	int n;
+	
+	n = 1;
+	while (n * n < num)
+		n++;
+	if (n * n == num)
+		return (n);
+	else
+		return (-1);
+}
