@@ -73,7 +73,7 @@ void	lstadd(t_tet **head, t_tet *tet)
 int		ft_sqrt(int num)
 {
 	int n;
-	
+
 	n = 1;
 	while (n * n < num)
 		n++;

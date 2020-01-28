@@ -16,7 +16,7 @@ char	**complete_matrix(char **matrix)
 {
 	int	n;
 	int	i;
-	
+
 	n = 1;
 	while (matrix[0][++n] != '\0')
 		matrix[0][n] = '1';

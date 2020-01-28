@@ -1,4 +1,4 @@
-TARGET = fillit
+NAME = fillit
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -c
@@ -11,10 +11,10 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 .PHONY: all clean fclean re
 
-all: $(TARGET)
+all: $(NAME)
 
-$(TARGET): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) $(LIBFT) -o $(TARGET)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(OBJ) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -27,7 +27,7 @@ clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(RM) -f $(TARGET)
+	$(RM) -f $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all	

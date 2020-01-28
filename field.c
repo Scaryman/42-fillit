@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   field.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sosartor <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/28 20:20:50 by sosartor          #+#    #+#             */
+/*   Updated: 2020/01/28 20:20:51 by sosartor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 int		get_min_field_size(t_tet *head)
@@ -28,10 +40,10 @@ char	*get_field_from_matrix(char **matrix, int size)
 	int		n;
 	int		i;
 	char	*field;
-	
+
 	if ((field = ft_strnew(size)) == NULL)
 		return (NULL);
-	field = ft_memset(field, '.', size);	
+	field = ft_memset(field, '.', size);
 	n = 0;
 	while (matrix[++n])
 		if (matrix[n][0] == '2')
