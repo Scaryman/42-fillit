@@ -25,10 +25,11 @@ t_tet	*create_tets(char *filename)
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		return (NULL);
 	c = 'A';
-	while ((res = get_tet(fd, &new, c++)) > 0)
+	res = 0;
+	while ((res = get_tet(fd, &new, res, c++)) > 0)
 		lstadd(&tets, new);
 	close(fd);
-	if (res == -1)
+	if (res == -1 || res == 21)
 		free_tets(&tets);
 	return (tets);
 }
@@ -59,7 +60,7 @@ t_tet	*create_tet(const char *buf, int size, char c)
 	return (tet);
 }
 
-int		get_tet(int fd, t_tet **new, char c)
+int		get_tet(int fd, t_tet **new, int prev_res, char c)
 {
 	char	*buf;
 	int		size;
@@ -76,10 +77,10 @@ int		get_tet(int fd, t_tet **new, char c)
 		else
 			size = -1;
 	}
+	else if (size > 0 || prev_res == 21)
+		size = -1;
 	ft_strdel(&buf);
-	if (size == 0 || size == -1)
-		return (size);
-	return (1);
+	return (size);
 }
 
 void	free_tets(t_tet **head)

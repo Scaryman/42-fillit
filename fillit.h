@@ -29,7 +29,7 @@ typedef struct		s_tet
 typedef int			t_bool;
 t_tet				*create_tets(char *filename);
 t_tet				*create_tet(const char *buf, int size, char c);
-int					get_tet(int fd, t_tet **new, char c);
+int					get_tet(int fd, t_tet **new, int prev_res, char c);
 void				free_tets(t_tet **head);
 void				lstadd(t_tet **head, t_tet *tet);
 int					get_max(int a, int b);

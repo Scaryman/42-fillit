@@ -58,7 +58,8 @@ t_bool	fill_variants(char **lm, char **field, t_tet *tet, int fs)
 		{
 			pos = tet->y[n] * fs + tet->x[n] + shift;
 			if (pos < fs * fs && (pos == 0 || (pos % fs == 0
-				&& (*field)[pos - 1] == '0') || pos % fs != 0))
+				&& (n == 0 || tet->y[n - 1] < tet->y[n]))
+				|| pos % fs != 0))
 				(*field)[pos] = tet->c;
 			else
 				break ;

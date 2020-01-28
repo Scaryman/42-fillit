@@ -23,14 +23,14 @@ int		main(int argc, char **argv)
 	else
 	{
 		if ((tets = create_tets(argv[1])) == NULL)
-			ft_putendl("Error");
+			ft_putendl("error");
 		else
 		{
 			field_size = get_min_field_size(tets);
 			while ((res = get_solution(field_size++, tets)) != 1)
 				if (res == -1)
 				{
-					ft_putendl("Error");
+					ft_putendl("error");
 					break ;
 				}
 			free_tets(&tets);
