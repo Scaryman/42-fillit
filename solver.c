@@ -24,6 +24,25 @@ int		get_solution(int field_size, t_tet *tets)
 	return (solved);
 }
 
+t_bool	check_cover(char **matrix, t_tet *cur_tet, int n)
+{
+	while (cur_tet)
+	{
+		while (matrix[n])
+		{
+			if (matrix[n][0] == '1' && matrix[n][1] == cur_tet->c)
+				break ;
+			if (matrix[n][1] > cur_tet->c)
+				return (FALSE);
+			n++;
+		}
+		if (!matrix[n])
+			return (FALSE);
+		cur_tet = cur_tet->next;
+	}
+	return (TRUE);
+}
+
 int		solve(char **matrix, t_tet *cur_tet, int n)
 {
 	int	solved;
@@ -32,10 +51,13 @@ int		solve(char **matrix, t_tet *cur_tet, int n)
 		return (print_solution(matrix));
 	while (matrix[n])
 	{
+		if (matrix[n][1] > cur_tet->c)
+			break ;
 		if (matrix[n][0] == '1' && matrix[n][1] == cur_tet->c)
 		{
 			matrix = set_covering(matrix, n);
-			if ((solved = solve(matrix, cur_tet->next, n + 1)) != 0)
+			if (check_cover(matrix, cur_tet->next, n + 1) == TRUE
+				&& (solved = solve(matrix, cur_tet->next, n + 1)) != 0)
 				return (solved);
 			else
 				matrix = unset_covering(matrix, n);
@@ -56,7 +78,6 @@ char	**set_covering(char **matrix, int row)
 	{
 		if (matrix[row][n] != '0')
 		{
-			matrix[0][n] = '0';
 			i = 0;
 			while (matrix[++i])
 				if (matrix[i][n] != '0' && matrix[i][0] == '1')
@@ -77,7 +98,6 @@ char	**unset_covering(char **matrix, int row)
 	{
 		if (matrix[row][n] != '0')
 		{
-			matrix[0][n] = '1';
 			i = 0;
 			while (matrix[++i])
 				if (matrix[i][n] != '0' && matrix[i][0] == matrix[row][1])

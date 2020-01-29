@@ -47,4 +47,5 @@ int					print_solution(char **matrix);
 char				**set_covering(char **matrix, int row);
 int					solve(char **matrix, t_tet *cur_tet, int n);
 char				**unset_covering(char **matrix, int row);
+t_bool				check_cover(char **matrix, t_tet *cur_tet, int n);
 #endif
