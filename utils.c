@@ -71,9 +71,9 @@ t_bool	lstadd(t_tet **head, t_tet *tet)
 			tmp = tmp->next;
 			n++;
 		}
+		tmp->next = tet;
 		if (n == 26)
 			return (FALSE);
-		tmp->next = tet;
 	}
 	return (TRUE);
 }
